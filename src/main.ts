@@ -5,6 +5,7 @@ import {
   unmatchedPatterns,
   getContent
 } from "./util";
+import { getSha } from "./github";
 import { setFailed } from "@actions/core";
 import { GitHub } from "@actions/github";
 import { env } from "process";
@@ -59,26 +60,23 @@ async function run() {
         console.warn(`🤔 ${config.input_files} not include valid file.`);
       }
       files.forEach(async path => {
-        const [owner, repo] = config.github_repository.split("/");
-        const response = await gh.repos.getContents({ owner, repo, path });
-        const tag = config.github_ref.replace("refs/tags/", "");
+        try {
+          const [owner, repo] = config.github_repository.split("/");
+          const tag = config.github_ref.replace("refs/tags/", "");
 
-        if (Array.isArray(response.data)) {
-          console.info(`${path} is not a file`);
-          return;
+          const message = `🎉 Release ${tag}`;
+          await gh.repos.createOrUpdateFile({
+            owner,
+            repo,
+            path,
+            message,
+            content: getContent(path),
+            sha: await getSha(gh, config, path)
+          });
+        } catch (error) {
+          console.log(`⚠️ GitHub release failed with status: ${error.status}`);
+          console.log(error);
         }
-
-        const user = {};
-
-        const message = `🎉 Release ${tag}`;
-        gh.repos.createOrUpdateFile({
-          owner,
-          repo,
-          path,
-          message,
-          content: getContent(path),
-          sha: response.data.sha
-        });
       });
     }
 
