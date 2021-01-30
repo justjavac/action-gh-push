@@ -9,6 +9,7 @@ import { getSha } from "./github";
 import { setFailed } from "@actions/core";
 import { GitHub } from "@actions/github";
 import { env } from "process";
+import { basename } from "path";
 
 async function run() {
   try {
@@ -59,10 +60,11 @@ async function run() {
       if (files.length == 0) {
         console.warn(`🤔 ${config.input_files} not include valid file.`);
       }
-      files.forEach(async path => {
+      files.forEach(async fullpath => {
         try {
           const [owner, repo] = config.github_repository.split("/");
           const tag = config.github_ref.replace("refs/tags/", "");
+          const path = basename(fullpath);
 
           const message = `🎉 Release ${tag}`;
           await gh.repos.createOrUpdateFile({
@@ -70,7 +72,7 @@ async function run() {
             repo,
             path,
             message,
-            content: getContent(path),
+            content: getContent(fullpath),
             sha: await getSha(gh, config, path)
           });
         } catch (error) {

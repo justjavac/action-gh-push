@@ -1,6 +1,5 @@
 {
   "name": "action-dvm-release",
-  "version": "0.1.0",
   "private": true,
   "description": "GitHub Action for creating DVM Releases",
   "main": "lib/main.js",
