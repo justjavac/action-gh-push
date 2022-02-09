@@ -1,5 +1,5 @@
-name: 'DVM Release'
-description: 'Github Action for creating DVM Releases'
+name: 'Push to a repo'
+description: 'Github Action for pushing to a repo'
 author: 'justjavac'
 inputs:
   files:

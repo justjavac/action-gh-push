@@ -27,7 +27,7 @@ export const parseConfig = (env: Env): Config => {
   return {
     github_token: env.GITHUB_TOKEN || "",
     github_ref: env.GITHUB_REF || "",
-    github_repository: "justjavac/dvm_releases",
+    github_repository: env.GITHUB_REPOSITORY || "",
     input_files: parseInputFiles(env.INPUT_FILES || ""),
     input_fail_on_unmatched_files: env.INPUT_FAIL_ON_UNMATCHED_FILES == "true"
   };

@@ -1,8 +1,8 @@
-# action-dvm-release
+# action-gh-push
 
-[![Build Status](https://github.com/justjavac/action-dvm-release/workflows/ci/badge.svg?branch=master)](https://github.com/justjavac/action-dvm-release/actions)
+[![Build Status](https://github.com/justjavac/action-gh-push/workflows/ci/badge.svg)](https://github.com/justjavac/action-gh-push/actions)
 
-> A GitHub Action for creating [DVM](https://github.com/justjavac/dvm) Releases to justjavac/dvm_releases.
+> A GitHub Action for pushing to a repo.
 
 ## 🤸 Usage
 
@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Release
-        uses: justjavac/action-dvm-release@v1
+        uses: justjavac/action-gh-push@v1
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,7 +42,7 @@ The following are optional as `step.with` keys
 | Name                      | Type    | Description                                                           |
 |---------------------------|---------|-----------------------------------------------------------------------|
 | `files`                   | String  | Newline-delimited globs of paths to assets to upload for release      |
-| `repository`              | String  | Name of a target repository in `<owner>/<repo>` format. defaults to `justjavac/dvm_releases`
+| `repository`              | String  | Name of a target repository in `<owner>/<repo>` format. Defaults to `GITHUB_REPOSITORY` env variable |
 | `fail_on_unmatched_files` | Boolean | Indicator of whether to fail if any of the `files` globs match nothing|
 
 #### environment variables
