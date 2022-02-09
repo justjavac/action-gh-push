@@ -16,7 +16,7 @@ export const parseInputFiles = (files: string): string[] => {
   return files.split(/\r?\n/).reduce<string[]>(
     (acc, line) =>
       acc
-        .concat(line.split(","))
+        .concat(line)
         .filter(pat => pat)
         .map(pat => pat.trim()),
     []

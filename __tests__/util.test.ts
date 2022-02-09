@@ -12,12 +12,12 @@ describe("util", () => {
       assert.deepStrictEqual(parseInputFiles(""), []);
     });
     it("parses comma-delimited strings", () => {
-      assert.deepStrictEqual(parseInputFiles("foo,bar"), ["foo", "bar"]);
+      assert.deepStrictEqual(parseInputFiles("foo,bar"), ["foo,bar"]);
     });
     it("parses newline and comma-delimited (and then some)", () => {
       assert.deepStrictEqual(
         parseInputFiles("foo,bar\nbaz,boom,\n\ndoom,loom "),
-        ["foo", "bar", "baz", "boom", "doom", "loom"]
+        ["foo,bar", "baz,boom,", "doom,loom"]
       );
     });
   });
