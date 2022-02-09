@@ -26,7 +26,7 @@ describe("util", () => {
     it("parses basic config", () => {
       assert.deepStrictEqual(parseConfig({}), {
         github_ref: "",
-        github_repository: "justjavac/dvm_releases",
+        github_repository: "justjavac/action-gh-push",
         github_token: "",
         input_files: [],
         input_fail_on_unmatched_files: false
