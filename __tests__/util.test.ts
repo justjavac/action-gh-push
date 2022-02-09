@@ -1,5 +1,4 @@
 import {
-  isTag,
   paths,
   parseConfig,
   parseInputFiles,
@@ -31,14 +30,6 @@ describe("util", () => {
         input_files: [],
         input_fail_on_unmatched_files: false
       });
-    });
-  });
-  describe("isTag", () => {
-    it("returns true for tags", async () => {
-      assert.equal(isTag("refs/tags/foo"), true);
-    });
-    it("returns false for other kinds of refs", async () => {
-      assert.equal(isTag("refs/heads/master"), false);
     });
   });
 

@@ -51,10 +51,6 @@ export const unmatchedPatterns = (patterns: string[]): string[] => {
   }, []);
 };
 
-export const isTag = (ref: string): boolean => {
-  return ref.startsWith("refs/tags/");
-};
-
 export const getContent = (path: string): string => {
   return readFileSync(path).toString("base64");
 };

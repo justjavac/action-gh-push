@@ -1,10 +1,4 @@
-import {
-  paths,
-  parseConfig,
-  isTag,
-  unmatchedPatterns,
-  getContent
-} from "./util";
+import { paths, parseConfig, unmatchedPatterns, getContent } from "./util";
 import { getSha } from "./github";
 import { setFailed } from "@actions/core";
 import { GitHub } from "@actions/github";
@@ -14,10 +8,6 @@ import { basename } from "path";
 async function run() {
   try {
     const config = parseConfig(env);
-
-    if (!isTag(config.github_ref)) {
-      throw new Error(`⚠️ GitHub Releases requires a tag`);
-    }
 
     if (config.input_files) {
       const patterns = unmatchedPatterns(config.input_files);
@@ -63,10 +53,10 @@ async function run() {
       files.forEach(async fullpath => {
         try {
           const [owner, repo] = config.github_repository.split("/");
-          const tag = config.github_ref.replace("refs/tags/", "");
+          const hash = config.github_ref.replace("refs/heads/", "");
           const path = basename(fullpath);
 
-          const message = `🎉 Release ${tag}`;
+          const message = `🎉 Release ${hash}`;
           await gh.repos.createOrUpdateFile({
             owner,
             repo,
@@ -76,13 +66,13 @@ async function run() {
             sha: await getSha(gh, config, path)
           });
         } catch (error) {
-          console.log(`⚠️ GitHub release failed with status: ${error.status}`);
+          console.log(`⚠️ GitHub push failed with status: ${error.status}`);
           console.log(error);
         }
       });
     }
 
-    console.log(`🎉 Release done`);
+    console.log(`🎉 Push done`);
   } catch (error) {
     setFailed(error.message);
   }
